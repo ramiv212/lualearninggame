@@ -15,10 +15,17 @@ function Warrior:New(character)
     self.character = character
     self.isEnemy = false
 
+    
     -- ability parameters --------
     self.abilities = {
-        Attack = self.Attack,
-        Defend = self.Defend,
+        {
+            name = "Attack",
+            func = self.Attack
+        },
+        {
+            name = "Defend",
+            func = self.Defend
+        }
     }
     self.turnTimerDiff = 0
 

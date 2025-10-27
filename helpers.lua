@@ -82,10 +82,11 @@ local function printCharacterNames(table)
 end
 
 
-local function validatePlayerNumberInput(playerChoiceNumber,choiceTable)
+local function validatePlayerNumberInput(playerChoiceNumber,choiceTableLength)
+
     if playerChoiceNumber and
         type(playerChoiceNumber) == "number" and
-        playerChoiceNumber <= #choiceTable then
+        playerChoiceNumber <= choiceTableLength then
         return playerChoiceNumber
     else
         return nil

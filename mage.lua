@@ -17,11 +17,19 @@ function Mage:New(character)
 
     -- ability parameters ----------
     self.abilities = {
-        self.Attack,
-        self.Fireball,
-        self.Heal,
+        {
+            name = "Attack",
+            func = self.Attack,
+        },
+        {
+            name = "Fireball",
+            func = self.Fireball,
+        },
+        {
+            name = "Heal",
+            func = self.Heal,
+        },
     }
-
     return self
 end
 
@@ -42,7 +50,7 @@ end
 
 function Mage:Fireball(target)
     local dmg = 0
-    if self.character.weapon.name == "Staff" then dmg = 8 else dmg = 3 end
+    if self.character.weapon.name == "Staff" then dmg = 12 else dmg = 3 end
     target.hp = target.hp - dmg
     helper.attackFb(self.character,target,dmg,{spellName = "Fireball"})
 end

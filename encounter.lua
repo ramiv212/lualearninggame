@@ -77,22 +77,22 @@ end
 local function playerPicksAbility(actingCharacter)
     print("Which ability will " .. actingCharacter.name .. " use?")
 
-    local counter = 1
 
-    for name, _ in pairs(actingCharacter.job.abilities) do
-        print(counter .. ": " .. name)
-        counter = counter + 1
+    for i, obj in pairs(actingCharacter.job.abilities) do
+        print(i .. ": " .. obj.name)
     end
 
     local playerChoice = tonumber(io.read())
-    local playerChoice = Helpers.validatePlayerNumberInput(playerChoice,actingCharacter.job.abilities)
 
-    print(playerChoice)
+    local playerChoice = Helpers.validatePlayerNumberInput(playerChoice,#actingCharacter.job.abilities)
+
 
     -- if there is a choice, and that choice is a number, and that choice is not larger than the number of abilities
     if not playerChoice then return playerPicksAbility(actingCharacter)
     
-    else return actingCharacter.job.abilities[playerChoice] end
+    
+    else 
+        return actingCharacter.job.abilities[playerChoice].func end
 
     print("\n")
 end
@@ -110,7 +110,7 @@ local function playerPicksTarget(activeCharacter,playerParty,enemyParty)
 
     print("Enter the number of the enemy you want to attack: ")
     local playerChoice = tonumber(io.read())
-    local playerChoice = Helpers.validatePlayerNumberInput(playerChoice,opposingParty)
+    local playerChoice = Helpers.validatePlayerNumberInput(playerChoice,#opposingParty)
 
     -- if there is a choice, and that choice is a number, and that choice is not larger than the number of enemies
     if not playerChoice then return playerPicksTarget(activeCharacter,opposingParty,enemyParty)
@@ -128,7 +128,8 @@ local function playerTurn(actingCharacter,playerParty,enemyParty,encounterTable)
     local actingCharacterAttackTarget = opposingParty[playerTargetIndex]
 
     -- use picked ability on picked target
-    playerPickedAbility(actingCharacterAttackTarget)
+    print(playerPickedAbility)
+    playerPickedAbility(actingCharacter.job,actingCharacterAttackTarget)
 
     checkIfCharacterDeath(actingCharacterAttackTarget,playerParty,enemyParty,encounterTable)
 end
@@ -172,7 +173,7 @@ function Encounter:Turn()
         playerTurn(actingCharacter,self.playerParty,self.enemyParty,self.encounterTable)
     end
 
-    Helpers.printCharacterNames(self.encounterTable)
+    -- Helpers.printCharacterNames(self.encounterTable)
 
     self.turnNumber = self.turnNumber + 1
     self.activeCharacterIndex = incrementActiveCharacterIndex(self.encounterTable,self.activeCharacterIndex) -- if the last character has taken their turn, loop back to the first character
