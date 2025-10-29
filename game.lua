@@ -48,15 +48,18 @@ warriorJohn:Identify()
 mageJames:Identify()
 
 
--- warriorJohn:Attack(goblin1)
--- mageJames.job:Fireball(wolf1)
 
--- goblin1:Attack(warriorJohn)
--- wolf1:Attack(mageJames)
 
 
 
 Encounter:New(playerParty,enemyParty)
+Encounter:Turn()
+Encounter:Turn()
+Encounter:Turn()
+Encounter:Turn()
+Encounter:Turn()
+Encounter:Turn()
+Encounter:Turn()
 Encounter:Turn()
 Encounter:Turn()
 Encounter:Turn()

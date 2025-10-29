@@ -128,7 +128,6 @@ local function playerTurn(actingCharacter,playerParty,enemyParty,encounterTable)
     local actingCharacterAttackTarget = opposingParty[playerTargetIndex]
 
     -- use picked ability on picked target
-    print(playerPickedAbility)
     playerPickedAbility(actingCharacter.job,actingCharacterAttackTarget)
 
     checkIfCharacterDeath(actingCharacterAttackTarget,playerParty,enemyParty,encounterTable)
@@ -139,6 +138,22 @@ end
 local function incrementActiveCharacterIndex(encounterTable,activeCharacterIndex)
     if #encounterTable < activeCharacterIndex then return 1
     else return activeCharacterIndex + 1 end
+end
+
+
+
+local function checkIfEncounterIsOver(encounterTable)
+    local foundPlayerChar = false
+    local foundEnemyChar = false
+
+
+    for _,playerChar in ipairs(encounterTable) do
+        if not playerChar.job.isEnemy then foundPlayerChar = true end
+        if playerChar.job.isEnemy then foundEnemyChar = true end
+    end
+
+    print("playerParty is alive",foundEnemyChar)
+    print("enemyParty is alive",foundPlayerChar)
 end
 
 
@@ -174,6 +189,8 @@ function Encounter:Turn()
     end
 
     -- Helpers.printCharacterNames(self.encounterTable)
+
+    checkIfEncounterIsOver(self.encounterTable)
 
     self.turnNumber = self.turnNumber + 1
     self.activeCharacterIndex = incrementActiveCharacterIndex(self.encounterTable,self.activeCharacterIndex) -- if the last character has taken their turn, loop back to the first character
